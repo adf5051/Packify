@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!--colors
+        9D805A - dark tan
+        EBC99D - med tan
+        FFE6C5 - light tan
+        9DCEEA - baby blue
+        4B809E - blue
+        -->
+
+    <style type="text/css">
+        body {
+            background-color: #9D805A;
+        }
+
+        .navbar-custom {
+            color: #9DCEEA;
+            background-color: #4B809E;
+        }
+
+        .dropdown-custom .dropdown-toggle {
+            color: #EBC99D;
+            background-color: transparent;
+        }
+
+        .dropdown-custom.open {
+            background-color: transparent;
+        }
+
+        #customHeader .dropdown-custom.open .dropdown-toggle,
+        #customHeader .dropdown-custom .dropdown-toggle:hover,
+        #customHeader .dropdown-custom.open .dropdown-toggle:hover,
+        #customHeader .dropdown-custom .dropdown-toggle:focus,
+        #customHeader .dropdown-custom.open .dropdown-toggle:focus {
+            color: #4B809E;
+            background-color: #9DCEEA;
+        }
+
+        #myContent .row{
+            background-color:#9DCEEA;
+            height:1000px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <header id="customHeader" class="navbar navbar-fixed-top navbar-custom">
+        <div class="container">
+            <nav>
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            <img alt="Brand" src="./PackifyLogo.png" width="100" height="100" />
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown dropdown-custom">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Account<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Sign In</a></li>
+                                    <li><a href="#">Trips</a></li>
+                                    <li><a href="#">Settings</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="myContent" class="container">
+        <div class="row">
+            
+        </div>
+    </div>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
