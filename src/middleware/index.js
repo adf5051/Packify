@@ -1,4 +1,8 @@
-var RequiresLogin = function(req, res, next){
+// Packify
+// Middleware - index.js
+// Author: Alex Fuerst
+
+var RequiresLogin = function (req, res, next){
   
     if(!req.session.account){
         return res.redirect('/');

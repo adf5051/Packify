@@ -1,5 +1,6 @@
-// router.js
-// Alex Fuerst
+// Packify
+// Server - router.js
+// Author: Alex Fuerst
 
 var controllers = require('./controllers');
 var mid = require('./middleware');

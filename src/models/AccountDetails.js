@@ -1,4 +1,8 @@
-﻿var mongoose = require('mongoose');
+﻿// Packify
+// Models - AccountDetails.js
+// Author: Alex Fuerst
+
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
 var AccountDetailsModel;

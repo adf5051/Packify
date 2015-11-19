@@ -1,28 +1,41 @@
-﻿var models = require('../models');
+﻿// Packify
+// Controllers - AccountDetails.js
+// Author: Alex Fuerst
+
+// include the models
+var models = require('../models');
+
+// grab the details model
 var Details = models.AccountDetails;
 
+// dish up the details page
 var DetailsPage = function (req, res) {
+    // find the detalis for this user
     Details.AccountDetailsModel.findByOwner(req.session.account._id, function (err, doc) {
         if (err) {
             console.log(err);
             return res.status(400).json({ error: "An error occured" });
         }
         
+        // redirect if no account info exists yet
         if (!doc) {
-            return res.status(400).json({ error: "No Account Info Found" });
+            ModifyDetailsPage(req, res);
+            //return res.status(400).json({ error: "No Account Info Found" });
+        } else {          
+            res.render('Account', {
+                name: doc.name.first + " " + doc.name.last,
+                email: doc.email,
+                username: req.session.account.username,
+                csrfToken: req.csrfToken()
+            });
         }
-
-        res.render('Account', {
-            name: doc.name.first + " " + doc.name.last,
-            email: doc.email,
-            username: req.session.account.username,
-            csrfToken: req.csrfToken()
-        });
     });
-
 };
 
+// dish up the edit details page
 var ModifyDetailsPage = function (req, res) {
+    
+    // try to find account details for this user
     Details.AccountDetailsModel.findByOwner(req.session.account._id, function (err, doc) {
         if (err) {
             console.log(err);
@@ -30,7 +43,9 @@ var ModifyDetailsPage = function (req, res) {
         }
 
         var details;
-
+        
+        // if no details exist create an empty render object
+        // if details do exist render the current entries
         if (!doc) {
             details = {
                 name: { first: '', last: '' },
@@ -51,14 +66,15 @@ var ModifyDetailsPage = function (req, res) {
     });
 };
 
+// handle updating or creating account details
 var UpdateDetails = function (req, res) {
     
-    console.log("sd;lfkjasd;lkjf");
-
+    // double check required fields
     if (!req.body.firstName || !req.body.lastName) {
         return res.status(400).json({ error: "Please enter your full name" });
     }
-
+    
+    // populate the data object
     var detailsData = {
         name: { first: req.body.firstName, last: req.body.lastName },
         email: req.body.email,
@@ -67,12 +83,14 @@ var UpdateDetails = function (req, res) {
 
     var details;
     
+    // try to find an entry to update
     Details.AccountDetailsModel.findByOwner(req.session.account._id, function (err, doc) {
         if (err) {
             console.log(err);
             return res.status(400).json({ error: "An error occured" });
         }
-
+        
+        // if no entry exists create a new one
         if (!doc) {
             details = new Details.AccountDetailsModel(detailsData);
 
@@ -82,6 +100,7 @@ var UpdateDetails = function (req, res) {
             details.email = detailsData.email;
         }
         
+        // save the updated or new entry
         details.save(function (err) {
             if (err) {
                 console.log(err);

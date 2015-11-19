@@ -1,5 +1,6 @@
-// app.js
-// Alex Fuerst
+// Packify
+// Server - app.js
+// Author: Alex Fuerst, Cody Van De Mark
 
 // ------ Requires ------
 var path = require('path');

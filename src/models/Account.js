@@ -1,3 +1,7 @@
+// Packify
+// Models - Account.js
+// Author: Cody Van De Mark
+
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 

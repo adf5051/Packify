@@ -1,11 +1,20 @@
+// Packify
+// Client - Account.js
+// Author: Alex Fuerst
+
 "use strict";
 
+// when the page finishes loading hook up some event listeners
 $(document).ready(function(){
 
+    // send out a POST request to our server
     function sendAjax(action, data) {
+
+        // append our csrf token to the data string;
         var csrf = $("#csrfToken").val();
-        data+= "&_csrf=" + csrf;
-        console.log(data);
+        data += "&_csrf=" + csrf;
+
+        // set up the ajax request
         $.ajax({
             cache: false,
             type: "POST",
@@ -27,9 +36,11 @@ $(document).ready(function(){
         });
     }
 
+    // Signup Event listener
     $("#signupSubmit").on("click", function(e) {
         e.preventDefault();
         
+        // check for required inputs
         if ($("#username").val() == "" || $("#pass").val() == "" || $("#pass2").val() == "") {
             //tell the person they are messed up
 
@@ -39,6 +50,7 @@ $(document).ready(function(){
             return false;
         }
 
+        // check for matching passwords
         if ($("#pass").val() !== $("#pass2").val()) {
             //tell the person they are messed up
 
@@ -53,9 +65,11 @@ $(document).ready(function(){
         return false;
     });
 
+    // Login event listener
     $("#loginSubmit").on("click", function (e) {
         e.preventDefault();
 
+        // check all required fields
         if ($("#username").val() == "" || $("#pass").val() == "") {
             //tell the person they are messed up
 
@@ -70,9 +84,11 @@ $(document).ready(function(){
         return false;
     });
 
+    // Submit details event listener
     $("#detailsSubmit").on("click", function (e) {
         e.preventDefault();
         
+        // check all required fields
         if ($("#firstName").val() == "" || $("#lastName").val() == "") {
             //tell the person they are messed up
 

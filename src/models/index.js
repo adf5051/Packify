@@ -1,2 +1,5 @@
-﻿module.exports.Account = require('./Account.js');
+﻿// Packify
+// Models - index.js
+
+module.exports.Account = require('./Account.js');
 module.exports.AccountDetails = require('./AccountDetails');
