@@ -84,7 +84,7 @@ app.set('view engine', 'jade');
 
 // tell express where our views are
 app.set('views', __dirname + "/views");
-//app.use(favicon(__direname + "/../client/img/favicon.png"));
+app.use(favicon(__dirname + "/../client/img/favicon.ico"));
 
 // little security precaution
 app.disable('x-powered-by');
