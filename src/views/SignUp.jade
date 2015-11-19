@@ -1,19 +1,17 @@
-﻿doctype html
-extends ./template.jade
+﻿extends ./template.jade
 
 block content
   #myContent.container(style='padding-top:150px')
     .row
       .col-sm-4.col-sm-push-4
-        form(role='form')
+        form#signupForm(role='form' action="/signup", method="POST")
           .form-group
             label(for='username') Username:
             input#username.form-control(type='text')
           .form-group
             label(for='pass') Password:
             input#pass.form-control(type='password')
-          button.btn.btn-default(type='submit') Submit
-    .row
-      .col-sm-4.col-sm-push-4
-        h4 First time user? 
-          a(href="/signup") Sign Up.
+          .form-group
+            label(for='pass2') Confirm Password:
+            input#pass2.form-control(type='password')
+          button#signupSubmit.btn.btn-default(type='submit') Submit
