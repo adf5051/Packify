@@ -44,9 +44,9 @@ AccountDetailsSchema.methods.toAPI = function () {
 };
 
 AccountDetailsSchema.statics.findByOwner = function (ownerId, callback) {
-    var serach = { owner: mongoose.Types.ObjectId(ownerId) };
+    var search = { owner: mongoose.Types.ObjectId(ownerId) };
     
-    return AccountDetailsModel.find(search).select("name email owner").exec(callback);
+    return AccountDetailsModel.findOne(search,callback);
 };
 
 AccountDetailsModel = mongoose.model("AccountDetails", AccountDetailsSchema);

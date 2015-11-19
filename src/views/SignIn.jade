@@ -5,15 +5,18 @@ block content
   #myContent.container(style='padding-top:150px')
     .row
       .col-sm-4.col-sm-push-4
-        form(role='form')
+        form#loginForm(role='form' action="/login")
           .form-group
             label(for='username') Username:
-            input#username.form-control(type='text')
+            input#username.form-control(type='text' name="username")
           .form-group
             label(for='pass') Password:
-            input#pass.form-control(type='password')
-          button.btn.btn-default(type='submit') Submit
+            input#pass.form-control(type='password' name="pass")
+          button#loginSubmit.btn.btn-default(type='submit') Submit
     .row
       .col-sm-4.col-sm-push-4
         h4 First time user? 
           a(href="/signup") Sign Up.
+
+block scripts
+  script(src="/assets/scripts/Account.js")

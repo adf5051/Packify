@@ -4,7 +4,6 @@ $(document).ready(function(){
     console.log("ready");
 
     function sendAjax(action, data) {
-        console.log(data);
         $.ajax({
             cache: false,
             type: "POST",
@@ -24,7 +23,7 @@ $(document).ready(function(){
 
     $("#signupSubmit").on("click", function(e) {
         e.preventDefault();
-        console.log("here");
+        
         if ($("#username").val() == "" || $("#pass").val() == "" || $("#pass2").val() == "") {
             //tell the person they are dumb
             return false;
@@ -35,10 +34,34 @@ $(document).ready(function(){
             return false;
         }
 
-        console.log($("#signupForm").serialize());
         sendAjax($("#signupForm").attr("action"), $("#signupForm").serialize());
 
         return false;
     });
 
+    $("#loginSubmit").on("click", function (e) {
+        e.preventDefault();
+
+        if ($("#username").val() == "" || $("#pass").val() == "") {
+            //tell the person they are dumb
+            return false;
+        }
+
+        sendAjax($("#loginForm").attr("action"), $("#loginForm").serialize());
+
+        return false;
+    });
+
+    $("#detailsSubmit").on("click", function (e) {
+        e.preventDefault();
+        console.log("details");
+        if ($("#firstName").val() == "" || $("#lastName").val() == "") {
+            //tell the person they are dumb
+            return false;
+        }
+
+        sendAjax($("#detailsForm").attr("action"), $("#detailsForm").serialize());
+
+        return false;
+    });
 });

@@ -39,8 +39,23 @@ var signup = function(req, res) {
     if(req.body.pass != req.body.pass2) {
         return res.status(400).json({error: "Passwords do not match"});
     }
-    
-    Account.AccountModel.generateHash(req.body.pass, function(salt, hash) {
+
+    Account.AccountModel.findByUsername(req.body.username, function (err, doc) {
+        if (err) {
+            console.log(err);
+            return res.status(400).json({ error: "An error occured" });
+        }
+        
+        if (doc) {
+            return res.status(400).json({ error: "Username is already taken" });
+        }
+
+        CreateNew(req, res);
+    });
+};
+
+var CreateNew = function (req, res){
+    Account.AccountModel.generateHash(req.body.pass, function (salt, hash) {
         var accountData = {
             username: req.body.username,
             salt: salt,
@@ -50,17 +65,17 @@ var signup = function(req, res) {
         var newAccount = new Account.AccountModel(accountData);
         
         newAccount.save(function (err) {
-           if (err) {
-               console.log(err);
-               return res.status(400).json({error: "An error occured"});
-           } 
+            if (err) {
+                console.log(err);
+                return res.status(400).json({ error: "An error occured" });
+            }
             
             req.session.account = newAccount.toAPI();
             
-            res.json({redirect: '/accountDetailsModify'});
+            res.json({ redirect: '/accountDetailsModify' });
         });
     }); 
-};
+}
 
 module.exports.loginPage = loginPage;
 module.exports.signupPage = signupPage;
