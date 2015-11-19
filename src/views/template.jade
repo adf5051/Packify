@@ -10,6 +10,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
       // Optional theme
       link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
   body
+    input#csrfToken(type="hidden", name="_csrf", value="#{csrfToken}")
     header#customHeader.navbar.navbar-fixed-top.navbar-custom
       .container
         nav
