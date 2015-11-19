@@ -1,2 +1,2 @@
 module.exports.Account = require('./Account.js');
-//module.exports.AccountDetails = require('./AccountDetails');
+module.exports.AccountDetails = require('./AccountDetails');

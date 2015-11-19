@@ -1,47 +1,17 @@
-﻿doctype html
-html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
-  head
-    meta(charset='utf-8')
-    title
-    // Latest compiled and minified CSS
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
-    // Optional theme
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
-  body
-    header#customHeader.navbar.navbar-fixed-top.navbar-custom
-      .container
-        nav
-          .container-fluid
-            .navbar-header
-              a.navbar-brand(href='#')
-                img(alt='Brand', src='./PackifyLogo.png', width='100', height='100')
-          .collapse.navbar-collapse
-            ul.nav.navbar-nav.navbar-right
-              li.dropdown.dropdown-custom
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button')
-                  | Account
-                  span.caret
-                ul.dropdown-menu
-                  li
-                    a(href='#') Sign In
-                  li
-                    a(href='#') Trips
-                  li
-                    a(href='#') Settings
-      #myContent.container
-        .row
-          .col-sm-4.col-sm-push-4
-            form(role='form')
-              .form-group
-                label(for='firstName') First Name:
-                input#firstName.form-control(type='text', value='#{name.first}')
-              .form-group
-                label(for='lastName') Last Name:
-                input#lastName.form-control(type='text', value='#{name.last}')
-              .form-group
-                label(for='email') Email:
-                input#email.form-control(type='text', value='#{eamil}')
-              button.btn.btn-default(type='submit') Submit
-      // Latest compiled and minified JavaScript
-      script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-      script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+﻿extends ./template.jade
+
+block content
+  #myContent.container(style='padding-top:150px')
+    .row
+      .col-sm-4.col-sm-push-4
+        form(role='form')
+          .form-group
+            label(for='firstName') First Name:
+            input#firstName.form-control(type='text', value='#{name.first}')
+          .form-group
+            label(for='lastName') Last Name:
+            input#lastName.form-control(type='text', value='#{name.last}')
+          .form-group
+            label(for='email') Email:
+            input#email.form-control(type='text', value='#{email}')
+          button.btn.btn-default(type='submit') Submit

@@ -7,11 +7,13 @@ block content
         form#signupForm(role='form' action="/signup", method="POST")
           .form-group
             label(for='username') Username:
-            input#username.form-control(type='text')
+            input#username.form-control(type='text', name='username')
           .form-group
             label(for='pass') Password:
-            input#pass.form-control(type='password')
+            input#pass.form-control(type='password', name='pass')
           .form-group
             label(for='pass2') Confirm Password:
-            input#pass2.form-control(type='password')
+            input#pass2.form-control(type='password', name='pass2')
           button#signupSubmit.btn.btn-default(type='submit') Submit
+block scripts
+  script(src="/assets/scripts/Account.js")
