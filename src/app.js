@@ -36,6 +36,9 @@ var redisPass;
 if (process.env.REDISCLOUD_URL) {
     redisURL = url.parse(process.env.REDISCLOUD_URL);
     redisPass = redisURL.auth.split(":")[1];
+} else if (process.env.REDIS_URL) {
+    redisURL = url.parse(process.env.REDIS_URL);
+    redisPass = redisURL.auth.split(":")[1];
 }
 
 // grab our request router
