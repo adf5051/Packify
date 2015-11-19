@@ -21,16 +21,29 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
           .collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
               li.dropdown.dropdown-custom
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button')
-                  | Account
-                  span.caret
+                if username
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', role='button')
+                    | #{username}
+                    span.caret
+                else
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', role='button')
+                    | Account
+                    span.caret
                 ul.dropdown-menu
-                  li
-                    a(href='/signin') Sign In
-                  li
-                    a(href='#') Trips
-                  li
-                    a(href='#') Settings
+             
+                  if username
+                    li
+                      a(href='/logout') Log out
+                    li
+                      a(href='#') Trips
+                    li
+                      a(href='/accountDetails') Account
+                  else
+                    li
+                      a(href='/login') Sign In
+                    li
+                      a(href='/signup') Sign up
+
     block content
       #myContent.container(style='padding-top:150px')
 

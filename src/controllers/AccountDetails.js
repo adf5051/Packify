@@ -1,4 +1,4 @@
-var models = require('../models');
+﻿var models = require('../models');
 var Details = models.AccountDetails;
 
 var DetailsPage = function (req, res) {
@@ -35,12 +35,14 @@ var ModifyDetailsPage = function (req, res) {
             details = {
                 name: { first: '', last: '' },
                 email: '',
+                username: req.session.account.username,
                 csrfToken: req.csrfToken()
             };
         } else {
             details = {
                 name: doc.name,
                 email: doc.email,
+                username: req.session.account.username,
                 csrfToken: req.csrfToken()
             };
         }
