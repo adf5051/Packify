@@ -1,7 +1,6 @@
 "use strict";
 
 $(document).ready(function(){
-    console.log("ready");
 
     function sendAjax(action, data) {
         var csrf = $("#csrfToken").val();
@@ -15,11 +14,15 @@ $(document).ready(function(){
             dataType: "json",
             success: function (result, status, xhr) {
                 window.location = result.redirect;
+                $("#errorDisplay").animate({ height: 'hide' }, 200);
             },
             error: function (xhr, status, error) {
                 var messageObj = JSON.parse(xhr.responseText);
                 
                 //handle errors
+                if (HandleError) {
+                    HandleError(messageObj.error);
+                }
             }
         });
     }
@@ -28,12 +31,20 @@ $(document).ready(function(){
         e.preventDefault();
         
         if ($("#username").val() == "" || $("#pass").val() == "" || $("#pass2").val() == "") {
-            //tell the person they are dumb
+            //tell the person they are messed up
+
+            if (HandleError) {
+                HandleError("All fields are required");
+            }
             return false;
         }
 
         if ($("#pass").val() !== $("#pass2").val()) {
-            //tell the person they are dumb
+            //tell the person they are messed up
+
+            if (HandleError) {
+                HandleError("Passwords do not match");
+            }
             return false;
         }
 
@@ -46,7 +57,11 @@ $(document).ready(function(){
         e.preventDefault();
 
         if ($("#username").val() == "" || $("#pass").val() == "") {
-            //tell the person they are dumb
+            //tell the person they are messed up
+
+            if (HandleError) {
+                HandleError("All fields are required");
+            }
             return false;
         }
 
@@ -57,9 +72,13 @@ $(document).ready(function(){
 
     $("#detailsSubmit").on("click", function (e) {
         e.preventDefault();
-        console.log("details");
+        
         if ($("#firstName").val() == "" || $("#lastName").val() == "") {
-            //tell the person they are dumb
+            //tell the person they are messed up
+
+            if (HandleError) {
+                HandleError("First and Last name are required");
+            }
             return false;
         }
 

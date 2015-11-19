@@ -2,7 +2,7 @@ doctype html
 extends ./template.jade
 
 block content
-  #myContent.container(style='padding-top:150px')
+  #myContent.container
     .row
       .col-sm-4.col-sm-push-4
         form#loginForm(role='form' action="/login")
@@ -18,5 +18,5 @@ block content
         h4 First time user? 
           a(href="/signup") Sign Up.
 
-block scripts
+block append scripts
   script(src="/assets/scripts/Account.js")

@@ -1,7 +1,7 @@
 extends ./template.jade
 
 block content
-  #myContent.container(style='padding-top:150px')
+  #myContent.container
     .row
       .col-sm-4.col-sm-push-4
         form#detailsForm(role='form' action="/accountDetailsModify")
@@ -16,5 +16,5 @@ block content
             input#email.form-control(type='text', name="email" value='#{email}')
           button#detailsSubmit.btn.btn-default(type='submit') Submit
 
-block scripts
+block append scripts
   script(src="/assets/scripts/Account.js")

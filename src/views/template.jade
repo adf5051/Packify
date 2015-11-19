@@ -11,7 +11,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
       link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
   body
     input#csrfToken(type="hidden", name="_csrf", value="#{csrfToken}")
-    header#customHeader.navbar.navbar-fixed-top.navbar-custom
+    header#customHeader.navbar.navbar-custom(style="display:block")
       .container
         nav
           .container-fluid
@@ -43,9 +43,16 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
                       a(href='/login') Sign In
                     li
                       a(href='/signup') Sign up
-
+           
     block content
-      #myContent.container(style='padding-top:150px')
+      #myContent.container(style='padding-top:150px')   
+
+    block error
+      .row(style="position:fixed; bottom: 0; width:100%")
+        #errorDisplay.alert.alert-danger.col-sm-4.col-sm-push-4
+          span#errorMessage
+          button#closeError.close(type="button")
+            span &times;
 
     block jquery
       // Latest compiled and minified JavaScript
@@ -53,4 +60,5 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
       script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
 
     block scripts
+      script(src="/assets/scripts/ErrorHandler.js")
 

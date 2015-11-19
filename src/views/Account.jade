@@ -1,7 +1,7 @@
 ﻿extends ./template.jade
 
 block content
-  #myContent.container(style='padding-top:150px')
+  #myContent.container
     .row
       .col-sm-4.col-sm-push-4
         ul.list-group
@@ -9,4 +9,3 @@ block content
           li.list-group-item Email: #{email}
           li.list-group-item Username: #{username}
         a.btn.btn-default(href="/accountDetailsModify") Update
-
