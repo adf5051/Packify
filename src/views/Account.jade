@@ -1,9 +1,10 @@
-﻿extends ./template.jade
+extends ./template.jade
 
 block content
   #myContent.container(style='padding-top:150px')
     .row
       .col-sm-4.col-sm-push-4
+        input#csrfToken(type="hidden", name="_csrf", value="#{csrfToken}")
         ul.list-group
           li.list-group-item Name: #{name}
           li.list-group-item Email: #{email}

@@ -4,6 +4,9 @@ $(document).ready(function(){
     console.log("ready");
 
     function sendAjax(action, data) {
+        var csrf = $("#csrfToken").val();
+        data+= "&_csrf=" + csrf;
+        
         $.ajax({
             cache: false,
             type: "POST",

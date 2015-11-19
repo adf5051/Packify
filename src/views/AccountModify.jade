@@ -1,4 +1,4 @@
-﻿extends ./template.jade
+extends ./template.jade
 
 block content
   #myContent.container(style='padding-top:150px')
@@ -14,6 +14,7 @@ block content
           .form-group
             label(for='email') Email:
             input#email.form-control(type='text', name="email" value='#{email}')
+            input#csrfToken(type="hidden", name="_csrf", value="#{csrfToken}")
           button#detailsSubmit.btn.btn-default(type='submit') Submit
 
 block scripts
