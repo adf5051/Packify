@@ -11,13 +11,13 @@ var RequiresLogin = function (req, res, next){
     next();
 };
 
-var RequiresLogout = function(req, res, next){
-    if(req.session.account){
+var RequiresLogout = function (req, res, next) {
+    if (req.session.account) {
         return res.redirect("/accountDetails");
     }
-    
+
     next();
-}
+};
 
 module.exports.RequiresLogin = RequiresLogin;
 module.exports.RequiresLogout = RequiresLogout;

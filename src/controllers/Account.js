@@ -76,8 +76,8 @@ var signup = function (req, res) {
 };
 
 // create a new user
-var CreateNew = function (req, res){
-    
+var CreateNew = function (req, res) {
+
     // create a new account
     Account.AccountModel.generateHash(req.body.pass, function (salt, hash) {
         var accountData = {
@@ -85,23 +85,23 @@ var CreateNew = function (req, res){
             salt: salt,
             password: hash
         };
-        
+
         var newAccount = new Account.AccountModel(accountData);
-        
+
         newAccount.save(function (err) {
             if (err) {
                 console.log(err);
                 return res.status(400).json({ error: "An error occured" });
             }
-            
+
             // set up the session
             req.session.account = newAccount.toAPI();
-            
+
             // redirect the user to the edit details page
             res.json({ redirect: '/accountDetailsModify' });
         });
-    }); 
-}
+    });
+};
 
 module.exports.loginPage = loginPage;
 module.exports.signupPage = signupPage;

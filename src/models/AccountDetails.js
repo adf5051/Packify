@@ -44,7 +44,7 @@ AccountDetailsSchema.methods.toAPI = function () {
         name: this.name,
         email: this.email,
         username: owner.username
-    }
+    };
 };
 
 AccountDetailsSchema.statics.findByOwner = function (ownerId, callback) {
