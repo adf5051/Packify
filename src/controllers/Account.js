@@ -42,7 +42,7 @@ var login = function (req, res){
         req.session.account = account.toAPI();
         
         // redirect the user to the account details page
-        res.json({redirect: '/accountDetails'});
+        res.json({redirect: '/home'});
         
     });
 };

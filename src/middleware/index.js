@@ -13,7 +13,7 @@ var RequiresLogin = function (req, res, next){
 
 var RequiresLogout = function (req, res, next) {
     if (req.session.account) {
-        return res.redirect("/accountDetails");
+        return res.redirect("/home");
     }
 
     next();

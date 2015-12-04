@@ -1,0 +1,28 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-8.col-md-push-2
+        form#addressSearchForm(role='form' action="/addressSearch")
+          .form-group
+            label(for='street') Street
+            input#street.form-control(type='text', name="street")
+          .form-group
+            label(for='city') City (optional)
+            input#city.form-control(type='text', name="city")
+          .form-group
+            label(for='state') State (optional)
+            input#state.form-control(type='text', name="state")
+          .form-group
+            label(for='country') Country
+            input#country.form-control(type='text', name="country")
+          button#addressSubmit.btn.btn-default(type='submit') Search
+    .row
+      .col-md-8.col-md-push-2
+        h3 Matches
+        #addressList.list-group
+          p Search for a location to see possible matches
+
+block append scripts
+    script(src="/assets/scripts/NewTrip.js")

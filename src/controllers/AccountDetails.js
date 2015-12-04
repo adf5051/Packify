@@ -8,6 +8,26 @@ var models = require('../models');
 // grab the details model
 var Details = models.AccountDetails;
 
+var HomePage = function (req, res) {
+    Details.AccountDetailsModel.findByOwner(req.session.account._id, function (err, doc) {
+        if (err) {
+            console.log(err);
+            return res.status(400).json({ error: "An error occured" });
+        }
+        
+        // redirect if no account info exists yet
+        if (!doc) {
+            ModifyDetailsPage(req, res);
+        } else {
+            res.render('WelcomePage', {
+                name: doc.name.first,
+                username: req.session.account.username,
+                csrfToken: req.csrfToken()
+            });
+        }
+    });
+};
+
 // dish up the details page
 var DetailsPage = function (req, res) {
     // find the detalis for this user
@@ -115,3 +135,4 @@ var UpdateDetails = function (req, res) {
 module.exports.DetailsPage = DetailsPage;
 module.exports.ModifyDetailsPage = ModifyDetailsPage;
 module.exports.UpdateDetails = UpdateDetails;
+module.exports.Home = HomePage;

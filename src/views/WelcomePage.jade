@@ -1,0 +1,11 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-10.col-md-push-1
+        .jumbotron
+          h1 Hello #{name}, Welcome Back!
+          p  What would you like to do today?
+          a.btn.btn-default(href="/addressSearch") Start a trip
+          a.btn.btn-default(href="#") Review a trip

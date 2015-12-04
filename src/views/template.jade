@@ -16,7 +16,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
         nav
           .container-fluid
             .navbar-header
-              a.navbar-brand(href='#')
+              a.navbar-brand(href='/home')
                 img(alt='Brand', src='assets/img/PackifyLogo.png', width='100', height='100')
           .collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
@@ -49,7 +49,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml')
 
     block error
       .row(style="position:fixed; bottom: 0; width:100%")
-        #errorDisplay.alert.alert-danger.col-sm-4.col-sm-push-4
+        #errorDisplay.alert.alert-danger.col-md-4.col-md-push-4
           span#errorMessage
           button#closeError.close(type="button")
             span &times;

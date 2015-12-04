@@ -14,6 +14,7 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var url = require('url');
 var csrf = require('csurf');
+var gtest = require('./GeocodeTest.js');
 
 // find our mongo database. 
 var dbURL = process.env.MONGOLAB_URI || "mongodb://localhost/Packify";
