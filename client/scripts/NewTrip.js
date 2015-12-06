@@ -3,8 +3,8 @@
 $(document).ready(function () {
     
     // send out a POST request to our server
-    function sendAjax(action, data) {
-        console.log(data);
+    function sendAjax(action, data, callback) {
+
         // append our csrf token to the data string;
         var csrf = $("#csrfToken").val();
         data += "&_csrf=" + csrf;
@@ -16,11 +16,7 @@ $(document).ready(function () {
             url: action,
             data: data,
             dataType: "json",
-            success: function (result, status, xhr) {
-                //window.location = result.redirect;
-                DisplayMatches(result);
-                $("#errorDisplay").animate({ height: 'hide' }, 200);
-            },
+            success: callback,
             error: function (xhr, status, error) {
                 var messageObj = JSON.parse(xhr.responseText);
                 
@@ -41,12 +37,42 @@ $(document).ready(function () {
             }
             return false;
         }
+        var success = function (result, status, xhr) {
+            DisplayMatches(result);
+            $("#errorDisplay").animate({ height: 'hide' }, 200);
+        };
+
+        sendAjax($("#addressSearchForm").attr("action"), $("#addressSearchForm").serialize(), success);
+    });
+    
+    $("#detailsSubmit").on("click", function (e) {
+        e.preventDefault();
+
+        var arrival = new Date($("#arrivalDate").val()).getTime();
+        var departure = new Date($("#departureDate").val()).getTime();
+        var now = Date.now();
         
-        sendAjax($("#addressSearchForm").attr("action"), $("#addressSearchForm").serialize());
+        var adults = $("#numberAdults").val();
+        var kids = $("#numberKids").val();
+        console.log(arrival + ' ' + departure);
+        console.log(adults + " " + kids);
+        if (arrival >= departure || arrival < now || departure < now || isNaN(arrival) || isNaN(departure)) {
+            if (HandleError) {
+                HandleError("Please enter a valid date range");
+            }
+            return false;
+        } else if (adults <= 0 && kids <= 0) {
+            if (HandleError) {
+                HandleError("There has to be at least one person traveling");
+            }
+            return false;
+        } else {
+            $("#errorDisplay").animate({ height: 'hide' }, 200);
+        }
+
     });
 
     function DisplayMatches(matches){
-        console.log(matches.results[0]);
         
         var listGroup = document.querySelector("#addressList");
 
@@ -57,7 +83,30 @@ $(document).ready(function () {
         }
 
         for (var i = 0; i < matches.results.length; i++) {
-            listGroup.innerHTML += "<a href='#' class='list-group-item'>" + matches.results[i].formatted_address + "</a>";
+            var lat = matches.results[i].geometry.location.lat;
+            var long = matches.results[i].geometry.location.lng;
+
+            listGroup.innerHTML += "<a href='/setAddress' data-lat='" 
+            + lat + "' data-long='" + long 
+            + "' class='list-group-item addressConfirmLink'>" 
+            + matches.results[i].formatted_address + "</a>";
         }
+
+        $(".addressConfirmLink").on("click", function (e) {
+            e.preventDefault();
+            
+            var data = "lat=" + $(e.target).attr("data-lat") + "&long=" + $(e.target).attr("data-long")
+            + "&address=" + $(e.target).text();
+
+            var action = "/setAddress";
+            
+            var success = function (result, status, xhr) {
+                if (result.redirect) {
+                    window.location = result.redirect;
+                }
+            };
+
+            sendAjax(action, data, success);
+        });
     }
 });

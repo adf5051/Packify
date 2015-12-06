@@ -19,5 +19,5 @@ $(document).ready(function () {
 // global handle error function;
 var HandleError = function (error) {
     $("#errorMessage").text(error);
-    $("#errorDisplay").animate({ height: 'toggle' }, 200);
+    $("#errorDisplay").animate({ height: 'show' }, 200);
 };

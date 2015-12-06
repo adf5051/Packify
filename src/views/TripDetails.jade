@@ -1,0 +1,31 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-8.col-md-push-2
+        h3 Trip Details
+    .row
+      .col-md-3.col-md-push-2
+        .input-group
+          label(for='arrival') Arrival
+          input#arrivalDate.form-control(type='date' name="arrival")
+      .col-md-3.col-md-push-2
+        .input-group
+          label(for='departure') Deprture
+          input#departureDate.form-control(type='date' name="departure") 
+    .row(style="padding-top:20px")
+      .col-md-3.col-md-push-2
+        .input-group
+          label(for='adults') Adults
+          input#numberAdults.form-control(type='number' name="adults" min="0" value="0")
+      .col-md-3.col-md-push-2
+        .input-group
+          label(for='kids') Children
+          input#numberKids.form-control(type='number' name="kids" min="0" value="0")
+    .row(style="padding-top:20px")
+      .col-md-3.col-md-push-2
+        button#detailsSubmit.btn.btn-default(type="submit") Calculate Recommendations
+
+block append scripts
+    script(src="/assets/scripts/NewTrip.js")
