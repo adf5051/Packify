@@ -1,6 +1,7 @@
 ﻿var models = require('../models');
 var mapsAPIHelper = require('googlemaps');
 var request = require('request');
+var moment = require('moment');
 
 var Trip = models.Trip;
 
