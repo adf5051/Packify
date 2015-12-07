@@ -15,6 +15,7 @@ var router = function (app) {
     app.get('/addressSearch', mid.RequiresLogin, controllers.Trips.AddressSearchPage);
     app.post('/addressSearch', mid.RequiresLogin, controllers.Trips.LookupAddress);
     app.post('/setAddress', mid.RequiresLogin, controllers.Trips.SetAddress);
+    app.get('/tripDetails', mid.RequiresLogin, controllers.Trips.TripDetails);
     app.get('/accountDetails', mid.RequiresLogin, controllers.AccountDetails.DetailsPage);
     app.get('/accountDetailsModify', mid.RequiresLogin, controllers.AccountDetails.ModifyDetailsPage);
     app.post('/accountDetailsModify', mid.RequiresLogin, controllers.AccountDetails.UpdateDetails);

@@ -24,6 +24,13 @@ var AddrSearchPage = function (req, res) {
     });
 };
 
+var TripDetails = function (req, res) {
+    res.render('TripDetails', {
+        username: req.session.account.username,
+        csrfToken: req.csrfToken()
+    });
+};
+
 var AddrSearch = function (req, res) {
     
     if (!req.body.street || !req.body.country) {
@@ -98,3 +105,4 @@ var SetAddress = function (req, res) {
 module.exports.AddressSearchPage = AddrSearchPage;
 module.exports.LookupAddress = AddrSearch;
 module.exports.SetAddress = SetAddress;
+module.exports.TripDetails = TripDetails;
