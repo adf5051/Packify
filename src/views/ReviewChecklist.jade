@@ -1,0 +1,77 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-8.col-md-push-2
+        h2 #{address}
+        h3 #{days}
+    if adults.num > 0
+      .row
+        .col-md-4.col-md-push-4
+          h4 Adults
+          ul.list-group
+            if heavyJackets
+              li.list-group-item Heavy Jackets: #{adults.num}
+            if lightJackets
+              li.list-group-item Light Jackets: #{adults.num}
+            if sandals
+              li.list-group-item Sandals: #{adults.num}
+            if shoes
+              li.list-group-item Shoes: #{adults.num}
+            if boots
+              li.list-group-item Boots: #{adults.num}
+            if umbrella
+              li.list-group-item Umbrella
+            if adults.tshirts > 0
+              li.list-group-item T-Shirts: #{adults.tshirts}
+            if adults.longsleeves > 0
+              li.list-group-item Longsleeve Shirts: #{adults.longsleeves}
+            if adults.sweaters > 0
+              li.list-group-item Sweaters: #{adults.sweaters}
+            if adults.underwear > 0
+              li.list-group-item Underwear: #{adults.underwear}
+            if adults.pants > 0
+              li.list-group-item Pants: #{adults.pants}
+            if adults.shorts > 0
+              li.list-group-item Shorts: #{adults.shorts}
+            if adults.socks > 0
+              li.list-group-item Pairs of Socks: #{adults.socks}
+    if kids.num > 0
+      .row
+        .col-md-4.col-md-push-4
+          h4 Kids
+          ul.list-group
+            if heavyJackets
+              li.list-group-item Heavy Jackets: #{kids.num}
+            if lightJackets
+              li.list-group-item Light Jackets: #{kids.num}
+            if sandals
+              li.list-group-item Sandals: #{kids.num}
+            if shoes
+              li.list-group-item Shoes: #{kids.num}
+            if boots
+              li.list-group-item Boots: #{kids.num}
+            if umbrella
+              li.list-group-item Umbrella
+            if kids.tshirts > 0
+              li.list-group-item T-Shirts: #{kids.tshirts}
+            if kids.longsleeves > 0
+              li.list-group-item Longsleeve Shirts: #{kids.longsleeves}
+            if kids.sweaters > 0
+              li.list-group-item Sweaters: #{kids.sweaters}
+            if kids.underwear > 0
+              li.list-group-item Underwear: #{kids.underwear}
+            if kids.pants > 0
+              li.list-group-item Pants: #{kids.pants}
+            if kids.shorts > 0
+              li.list-group-item Shorts: #{kids.shorts}
+            if kids.socks > 0
+              li.list-group-item Pairs of Socks: #{kids.socks}
+    if misc && misc.length > 0
+      .row
+        .col-md-4.col-md-push-4
+          h4 Miscellaneous
+          ul.list-group
+            each val in misc
+              li.list-group-item #{val.name}: #{val.amt}

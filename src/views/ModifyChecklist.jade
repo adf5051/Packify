@@ -1,0 +1,115 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-8.col-md-push-2
+        if days > 1
+          h2 Recommended items for #{days} days per individual
+        else
+          h2 Recommended items for #{days} day per individual
+    .row
+      .col-md-8.col-md-push-2
+        h3 Everyone - #{adults+kids}
+        form#everyone(role='form' action='/confirmChecklist')
+          .form-group
+            label.checkboxinline(for='heavyJacket', style="width:250px") Heavy Jackets
+              if heavyJacket
+                input.heavyJacket(type='checkbox', name='heavyJacket', style="float:right", checked="checked")
+              else
+                input.heavyJacket(type='checkbox', name='heavyJacket', style="float:right")
+          .form-group
+            label.checkboxinline(for='lightJacket', style="width:250px") Light Jackets
+              if lightJacket
+                input.lightJacket(type='checkbox', name='lightJacket', style="float:right", checked="checked")
+              else
+                input.lightJacket(type='checkbox', name='lightJacket', style="float:right")
+          .form-group
+            label.checkboxinline(for='sandals', style="width:250px") Sandals
+              if sandals
+                input.sandals(type='checkbox', name='sandals', style="float:right", checked="checked")
+              else
+                input.sandals(type='checkbox', name='sandals', style="float:right")
+          .form-group
+            label.checkboxinline(for='shoes', style="width:250px") Shoes
+              if shoes
+                input.shoes(type='checkbox', name='shoes', style="float:right", checked="checked")
+              else
+                input.shoes(type='checkbox', name='shoes', style="float:right")
+          .form-group
+            label.checkboxinline(for='boots', style="width:250px") Boots
+              if boots
+                input.boots(type='checkbox', name='boots', style="float:right", checked="checked")
+              else
+                input.boots(type='checkbox', name='boots', style="float:right")
+          .form-group
+            label.checkboxinline(for='umbrella', style="width:250px") Umbrellas
+              if umbrella
+                input.umbrella(type='checkbox', name='umbrella', style="float:right", checked="checked")
+              else
+                input.umbrella(type='checkbox', name='umbrella', style="float:right")
+    if adults > 0
+      .row
+        .col-md-8.col-md-push-2
+          h3 Adults - #{adults}
+          form#adults(role='form' action='/confirmChecklist')
+            .form-group(style="width:250px")
+              label(for='tshirts') T-Shirts
+              input.tshirts(type='number' style="float:right" name='tshirts' min='0' max='#{days+days}' value="#{tshirts}")
+            .form-group(style="width:250px")
+              label(for='longsleeves') Longsleeve Shirts
+              input.longsleeves(type='number' style="float:right" name='longsleeves' min='0' max='#{days+days}' value="#{longsleeves}")
+            .form-group(style="width:250px")
+              label(for='sweaters') Sweaters
+              input.sweaters(type='number' style="float:right" name='sweaters' min='0' max='#{days+days}' value="#{sweaters}")
+            .form-group(style="width:250px")
+              label(for='underwear') Underwear
+              input.underwear(type='number' style="float:right" name='underwear' min='0' max='#{days+days}' value="#{underwear}")
+            .form-group(style="width:250px")
+              label(for='pants') Pants
+              input.pants(type='number' style="float:right" name='pants' min='0' max='#{days+days}' value="#{pants}")
+            .form-group(style="width:250px")
+              label(for='shorts') Shorts
+              input.shorts(type='number' style="float:right" name='shorts' min='0' max='#{days+days}' value="#{shorts}")
+            .form-group(style="width:250px")
+              label(for='socks') Pairs of Socks
+              input.socks(type='number' style="float:right" name='socks' min='0' max='#{days+days}' value="#{socks}")
+    if kids > 0
+      .row
+        .col-md-8.col-md-push-2
+          h3 Kids - #{kids}
+          form#kids(role='form' action='/confirmChecklist')
+            .form-group(style="width:250px")
+              label(for='tshirts') T-Shirts
+              input.tshirts(type='number' style="float:right" name='tshirts' min='0' max='#{days+days}' value="#{tshirts}")
+            .form-group(style="width:250px")
+              label(for='longsleeves') Longsleeve Shirts
+              input.longsleeves(type='number' style="float:right" name='longsleeves' min='0' max='#{days+days}' value="#{longsleeves}")
+            .form-group(style="width:250px")
+              label(for='sweaters') Sweaters
+              input.sweaters(type='number' style="float:right" name='sweaters' min='0' max='#{days+days}' value="#{sweaters}")
+            .form-group(style="width:250px")
+              label(for='underwear') Underwear
+              input.underwear(type='number' style="float:right" name='underwear' min='0' max='#{days+days}' value="#{underwear}")
+            .form-group(style="width:250px")
+              label(for='pants') Pants
+              input.pants(type='number' style="float:right" name='pants' min='0' max='#{days+days}' value="#{pants}")
+            .form-group(style="width:250px")
+              label(for='shorts') Shorts
+              input.shorts(type='number' style="float:right" name='shorts' min='0' max='#{days+days}' value="#{shorts}")
+            .form-group(style="width:250px")
+              label(for='socks') Pairs of Socks
+              input.socks(type='number' style="float:right" name='socks' min='0' max='#{days+days}' value="#{socks}")
+    .row
+      .col-md-6.col-md-push-2
+        h3 Miscellaneous
+        form#misc(role='form' action='/confirmChecklist')
+    .row
+      .col-md-2.col-md-push-2
+        button#addItem.btn.btn-default(type="submit") #[span.glyphicon.glyphicon-plus] Add Item
+    .row
+      .col-md-2.col-md-push-4
+        button#confirmChecklist.btn.btn-default(type="submit") Confirm List
+
+block append scripts
+  script(src="/assets/scripts/Checklist.js")

@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+var redis = require('redis');
 var url = require('url');
 var csrf = require('csurf');
 
@@ -42,6 +43,13 @@ if (process.env.REDISCLOUD_URL) {
     redisPass = redisURL.auth.split(":")[1];
 }
 
+var redisClient = redis.createClient(redisURL.port, redisURL.hostname);
+
+redisClient.on('connect', function () {
+    console.log('success connecting to redis server');
+    global.redis = redisClient;
+});
+
 // grab our request router
 var router = require('./router.js');
 
@@ -60,6 +68,7 @@ app.use(compression());
 
 // add body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // set up our session information
 app.use(session({
@@ -95,7 +104,7 @@ app.use(cookieParser());
 app.use(csrf());
 app.use(function (err, req, res, next) {
     if (err.code !== "EBADCSRFTOKEN") return next(err);
-    
+    console.log(req.csrfToken());
     return;
 });
 

@@ -1,0 +1,37 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-8.col-md-push-2
+        h2 Weather Estimates
+        .media(style="padding-top:20px")
+          .media-left
+            img.media-object(src="/assets/img/sun.png" alt="sun" style="width:72px; height:72px")
+          .media-body
+            h4.media-heading Warm Weather
+            p There is a #[b #{weather.oversixty}] percent chance of weather over 60&#x2109
+            p There is a #[b #{weather.overninety}] percent chance of weather over 90&#x2109
+        .media
+          .media-left
+            img.media-object(src="/assets/img/snow.png" alt="snow" style="width:72px; height:72px")
+          .media-body
+            h4.media-heading Cold Weather
+            p There is a #[b #{weather.freezing}] percent chance of weather below 32&#x2109
+            p There is a #[b #{weather.snowonground}] percent chance that there will snow laying on the ground
+        .media
+          .media-left
+            img.media-object(src="/assets/img/rain.png" alt="rain" style="width:72px; height:72px")
+          .media-body
+            h4.media-heading Inclement Weather
+            p There is a #[b #{weather.windy}] percent chance of windy weather
+            p There is a #[b #{weather.raining}] percent chance of rainfall
+            p There is a #[b #{weather.snowing}] percent chance of snowfall
+    .row
+      .col-md-3.col-md-push-2
+        a#weatherConfirm.btn.btn-default(href="/modifyChecklist" type="submit") View Recommendations
+    .row(style="padding-top:20px")
+      .col-md-3.col-md-push-2
+        p Powered by
+        a(href="#{weather.wuurl}")
+          img.img-fluid(src="/assets/img/wundergroundLogo_4c_horz.png" style="max-width: 100%" atl="wunderground")

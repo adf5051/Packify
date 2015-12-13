@@ -39,6 +39,34 @@ var TripSchema = new mongoose.Schema( {
         }
     },
     
+    weather: {
+        wuurl: {
+            type: String,
+            trim: true
+        },
+        freezing: {
+            type: Number
+        },
+        oversixty: {
+            type: Number
+        },
+        overninety: {
+            type: Number
+        },
+        snowing: {
+            type: Number
+        },
+        snowonground: {
+            type: Number
+        },
+        raining: {
+            type: Number
+        },
+        windy: {
+            type: Number
+        }
+    },
+
     owner: {
         type: mongoose.Schema.ObjectId,
         required: true,

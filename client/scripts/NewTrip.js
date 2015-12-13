@@ -48,14 +48,18 @@ $(document).ready(function () {
     $("#detailsSubmit").on("click", function (e) {
         e.preventDefault();
 
+        var d = new Date();
+        var timezone = d.getTimezoneOffset() * 60000;
+
         var arrival = new Date($("#arrivalDate").val()).getTime();
         var departure = new Date($("#departureDate").val()).getTime();
+
         var now = Date.now();
-        
+        now -= timezone;
+
         var adults = $("#numberAdults").val();
         var kids = $("#numberKids").val();
-        console.log(arrival + ' ' + departure);
-        console.log(adults + " " + kids);
+
         if (arrival >= departure || arrival < now || departure < now || isNaN(arrival) || isNaN(departure)) {
             if (HandleError) {
                 HandleError("Please enter a valid date range");
@@ -69,7 +73,18 @@ $(document).ready(function () {
         } else {
             $("#errorDisplay").animate({ height: 'hide' }, 200);
         }
+        
+        var data = "start=" + arrival + "&end=" + departure + "&adults=" + adults + "&kids=" + kids;
 
+        var action = "/tripDetails";
+
+        var success = function (result, status, xhr) {
+            if (result.redirect) {
+                window.location = result.redirect;
+            }
+        };
+
+        sendAjax(action, data, success);
     });
 
     function DisplayMatches(matches){

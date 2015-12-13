@@ -127,7 +127,7 @@ var UpdateDetails = function (req, res) {
                 return res.status(400).json({ error: "An error occured" });
             }
             
-            res.json({ redirect: "/accountDetails" });
+            return res.status(200).json({ redirect: "/accountDetails" });
         });    
     });
 };
