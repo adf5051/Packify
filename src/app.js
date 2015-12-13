@@ -16,6 +16,11 @@ var redis = require('redis');
 var url = require('url');
 var csrf = require('csurf');
 
+// try to grab the port. Visual Studio with Node tools will set this as
+// will production. If not set fall back to 3000
+var port = process.env.PORT || process.env.NODE_PORT || 3000;
+console.log(port);
+
 // find our mongo database. 
 var dbURL = process.env.MONGOLAB_URI || "mongodb://localhost/Packify";
 
@@ -35,27 +40,26 @@ var redisURL = {
 
 // If in production redis URL will be set here
 var redisPass;
+var redisClient;
 if (process.env.REDISCLOUD_URL) {
+    redisClient = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
     redisURL = url.parse(process.env.REDISCLOUD_URL);
     redisPass = redisURL.auth.split(":")[1];
 } else if (process.env.REDIS_URL) {
+    redisClient = redis.createClient(process.env.REDISCLOUD_URL, { no_ready_check: true });
     redisURL = url.parse(process.env.REDIS_URL);
     redisPass = redisURL.auth.split(":")[1];
+} else {
+    redisClient = redis.createClient(redisURL.port, redisURL.hostname);
 }
 
-var redisClient = redis.createClient(redisURL.port, redisURL.hostname);
-
 redisClient.on('connect', function () {
-    console.log('success connecting to redis server');
     global.redis = redisClient;
+    console.log('success connecting to redis server');
 });
 
 // grab our request router
 var router = require('./router.js');
-
-// try to grab the port. Visual Studio with Node tools will set this as
-// will production. If not set fall back to 3000
-var port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 // set up our express app/server
 var app = express();
@@ -73,7 +77,7 @@ app.use(bodyParser.json());
 // set up our session information
 app.use(session({
     key: "sessionid",
-    
+
     // use the redis info gathered above
     store: new RedisStore({
         host: redisURL.hostname,
@@ -102,6 +106,7 @@ app.disable('x-powered-by');
 app.use(cookieParser());
 
 app.use(csrf());
+
 app.use(function (err, req, res, next) {
     if (err.code !== "EBADCSRFTOKEN") return next(err);
     console.log(req.csrfToken());
