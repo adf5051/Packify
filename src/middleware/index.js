@@ -20,20 +20,20 @@ var RequiresLogout = function (req, res, next) {
 };
 
 var RequiresTripEntryStarted = function (req, res, next) {
-
+    
     global.redis.hgetall(req.session.account._id, function (err, obj) {
         if (err) {
             console.log(err);
             return res.redirect("/home");
         }
-
+        
         if (!obj || !obj.newTrip) {
             return res.redirect("/home");
         }
-
+        
         next();
     });
-}
+};
 
 module.exports.RequiresLogin = RequiresLogin;
 module.exports.RequiresLogout = RequiresLogout;

@@ -246,8 +246,8 @@ var ReviewTrip = function (req, res) {
             start.setTime(start.getTime() + timezone);
             var end = new Date(doc.trip.tripDate.end);
             end.setTime(end.getTime() + timezone);
-            var dateString = (start.getMonth() + 1) + "/" + start.getDate() + "/" + start.getFullYear() + " - " 
-                + (end.getMonth() + 1) + "/" + end.getDate() + "/" + end.getFullYear();
+            var dateString = (start.getMonth() + 1) + "/" + start.getDate() + "/" + start.getFullYear() + " - " +
+                (end.getMonth() + 1) + "/" + end.getDate() + "/" + end.getFullYear();
             
             var adults = {
                 num : doc.trip.adults,

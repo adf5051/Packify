@@ -51,11 +51,11 @@ var AddrSearch = function (req, res) {
     // format the query string
     var addr = req.body.street + ",%20";
 
-    if (req.body.city != "" && req.body.city != " ") {
+    if (req.body.city !== "" && req.body.city !== " ") {
         addr += req.body.city + ",%20";
     }
 
-    if (req.body.state != "" && req.body.state != " ") {
+    if (req.body.state !== "" && req.body.state !== " ") {
         addr += req.body.state + ",%20";
     }
 
@@ -154,8 +154,8 @@ var ListTrips = function (req, res) {
             start.setTime(start.getTime() + timezone);
             var end = new Date(doc.tripDate.end);
             end.setTime(end.getTime() + timezone);
-            var dateString = (start.getMonth() + 1) + "/" + start.getDate() + "/" + start.getFullYear() + " - " 
-                + (end.getMonth() + 1) + "/" + end.getDate() + "/" + end.getFullYear();
+            var dateString = (start.getMonth() + 1) + "/" + start.getDate() + "/" + start.getFullYear() + " - " +
+                (end.getMonth() + 1) + "/" + end.getDate() + "/" + end.getFullYear();
 
             trips.push({
                 address: doc.location.address,
@@ -306,8 +306,8 @@ var DisplayWeather = function (req, res) {
             var latlongString = doc.location.lat + "," + doc.location.long;
             
             // piece together the querystring
-            var queryString = "http://api.wunderground.com/api/" + wundergroundKey 
-            + "/geolookup/" + plannerString + "/q/" + latlongString + ".json";
+            var queryString = "http://api.wunderground.com/api/" + wundergroundKey +
+            "/geolookup/" + plannerString + "/q/" + latlongString + ".json";
             
             // request the weather from wunderground.com
             request(queryString, function (err, response, body) {
@@ -318,7 +318,7 @@ var DisplayWeather = function (req, res) {
                 
                 //remove the damn excess characters or json.parse explodes
                 var jsonOBJ = body.replace(/(\r\n|\r|\n|\t)/gm, "");
-                var jsonOBJ = JSON.parse(jsonOBJ);
+                jsonOBJ = JSON.parse(jsonOBJ);
                 if (jsonOBJ.response.error) {
                     console.log(jsonOBJ.response.error);
                     return res.status(400).json({ error: "Error occured while looking up weather" });
@@ -340,7 +340,7 @@ var DisplayWeather = function (req, res) {
                 doc.save(function (err) {
                     if (err) {
                         console.log(err);
-                        return res.status(400).json({error: "An error occured"})
+                        return res.status(400).json({ error: "An error occured" });
                     }
                     
                     // display the estimates to the user
