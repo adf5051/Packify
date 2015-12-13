@@ -1,4 +1,8 @@
-﻿var mongoose = require('mongoose');
+﻿// Packify
+// Models - Checklist.js
+// Author: Alex Fuerst
+
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
 var ChecklistModel;

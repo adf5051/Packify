@@ -1,0 +1,23 @@
+﻿extends ./template.jade
+
+block content
+  #myContent.container
+    .row
+      .col-md-8.col-md-push-2
+        h2 #{username}'s Trips
+        p Looking to start a new trip? #[a(href="/addressSearch") Click here]
+    .row
+      .col-md-6.col-md-push-3
+        .list-group
+          if !trips || trips.length == 0
+            .list-group-item
+              h3 No trips found
+          else
+            each trip in trips
+              a.list-group-item.tripLink(href="#" data-id="#{trip.id}")
+                h4(data-id="#{trip.id}") #{trip.address}
+                h5(data-id="#{trip.id}") #{trip.date}
+                p(data-id="#{trip.id}") Attendees: #{trip.adults+trip.kids}
+
+block append scripts
+  script(src="/assets/scripts/NewTrip.js")

@@ -1,4 +1,8 @@
-﻿var mongoose = require('mongoose');
+﻿// Packify
+// Models - Trip.js
+// Author: Alex Fuerst
+
+var mongoose = require('mongoose');
 var _ = require('underscore');
 
 var TripModel;
@@ -91,9 +95,9 @@ TripSchema.methods.toAPI = function () {
 };
 
 TripSchema.statics.findByOwner = function (ownerId, callback) {
-    var search = { owner: mongoose.Types.ObjectId(ownerId) };
+    var search = { owner: mongoose.Types.ObjectId(ownerId), completed: true};
     
-    return TripModel.find(search, callback);
+    return TripModel.find(search).sort({ createdData: -1 }).exec(callback);
 };
 
 TripSchema.statics.findUnfinished = function (ownerId, callback) {

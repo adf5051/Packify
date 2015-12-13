@@ -1,17 +1,29 @@
-﻿var models = require("../models");
+﻿// Packify
+// Controllers - Checklist.js
+// Author: Alex Fuerst
 
+// include our models
+var models = require("../models");
+
+// grab the checklist model
 var cl = models.CheckList;
 
+// Create some recommendations and prepopulate a checklist
+// to then serve up as a modifiable page to the user
 var CreateChecklist = function (req, res) {
+    
+    // try to grab the redis entry for this user
     global.redis.hgetall(req.session.account._id, function (err, obj) {
         if (err) {
             return res.status(400).json({ error: "An error occured" });
         }
         
+        // double check to make sure there is a trip that they are working on
         if (!obj.newTrip) {
             return res.status(400).json({ error: "We can't find the trip you are trying to modify, please restart" });
         }
         
+        // find the trip data by that id provided
         models.Trip.TripModel.findById(obj.newTrip, function (err, doc) {
             if (err) {
                 console.log(err);
@@ -21,6 +33,7 @@ var CreateChecklist = function (req, res) {
                 return res.status(400).json({ error: "We can't find the trip you are trying to modify, please restart" });
             }
             
+            // if they haven't finished filling out the trip details redirect them
             if (!doc.tripDate || !doc.location || !doc.weather) {
                 res.redirect("/tripDetails");
             }
@@ -37,6 +50,8 @@ var CreateChecklist = function (req, res) {
             //hr to day
             days = days / 24;
             
+            // calculate arbitrary weights
+            // this would be where time and research would need to happen to be accurate
             var cold = (doc.weather.freezing + doc.weather.snowing + doc.weather.snowonground) / 3;
             var hot = doc.weather.overninety;
             var mild = doc.weather.oversixty;
@@ -56,6 +71,8 @@ var CreateChecklist = function (req, res) {
             var shorts = 0;
             var socks = days;
             
+            // calculate arbitrary values of items
+            // this would be where time and research would need to happen to be accurate
             if (hot >= 75) {
                 if (cold >= 10) {
                     lightJacket = true;
@@ -109,21 +126,25 @@ var CreateChecklist = function (req, res) {
             
             return res.render("ModifyChecklist", outObj);
         });
-
     });
 };
 
+// After the user confirms they like the checklist it gets sent back to us
+// this creates the appropriate checklist db entry
 var ConfirmChecklist = function (req, res) {
     
+    // try to grab the redis entry for this user
     global.redis.hgetall(req.session.account._id, function (err, obj) {
         if (err) {
             return res.status(400).json({ error: "An error occured" });
         }
         
+        // make sure they are working on a new trip
         if (!obj.newTrip) {
             return res.status(400).json({ error: "We can't find the trip you are trying to modify, please restart" });
         }
         
+        // find the trip by the given ID
         models.Trip.TripModel.findById(obj.newTrip, function (err, doc) {
             if (err) {
                 console.log(err);
@@ -133,6 +154,7 @@ var ConfirmChecklist = function (req, res) {
                 return res.status(400).json({ error: "We can't find the trip you are trying to modify, please restart" });
             }
             
+            // make sure they have actually filled out all of the trip details
             if (!doc.tripDate || !doc.location || !doc.weather) {
                 res.redirect("/tripDetails");
             }
@@ -142,6 +164,9 @@ var ConfirmChecklist = function (req, res) {
             checklistObj.adults = req.body.adults;
             checklistObj.kids = req.body.kids;
             
+            // this could probably be revised in some way, possibly at the schema.
+            // but the idea is these things are usually 1 per person (you don't need
+            // 1 pair of boots for each day of the trip) so I am assuming everyone does/n't have them
             checklistObj.kids.heavyJacket = checklistObj.adults.heavyJacket = req.body.all.heavyJacket;
             checklistObj.kids.lightJacket = checklistObj.adults.lightJacket = req.body.all.lightJacket;
             checklistObj.kids.sandals = checklistObj.adults.sandals = req.body.all.sandals;
@@ -149,6 +174,7 @@ var ConfirmChecklist = function (req, res) {
             checklistObj.kids.shoes = checklistObj.adults.shoes = req.body.all.shoes;
             checklistObj.kids.umbrella = checklistObj.adults.umbrella = req.body.all.umbrella;
             
+            // populate the misc array
             var misc = req.body.misc;
             checklistObj.misc = [];
             for (var element in misc) {
@@ -156,21 +182,26 @@ var ConfirmChecklist = function (req, res) {
             }
             
             var newChecklist = new cl.ChecklistModel(checklistObj);
-
+            
+            // try to save the entry
             newChecklist.save(function (err) {
                 if (err) {
                     console.log(err);
                     return res.status(400).json({ error: "An error occured" });
                 }
-
+                
+                //set the trip to complete and save
                 doc.completed = true;
                 doc.save(function (err) {
                     if (err) {
                         console.log(err);
                         return res.status(400).json({ error: "An error occured" });
                     }
-
+                    
+                    // delete the newTrip redis entry for this user
                     global.redis.hdel(req.session.account._id, "newTrip");
+                    
+                    // set the requestedTrip entry to then display that to the user
                     global.redis.hmset(req.session.account._id, {
                         "requestedTrip": doc._id
                     });
@@ -182,7 +213,11 @@ var ConfirmChecklist = function (req, res) {
     });
 };
 
+// This is called when the user requests to review a trip
+// the trip requested is stored in a per user redis entry
 var ReviewTrip = function (req, res) {
+    
+    // try to grab the redis entry for this user
     global.redis.hgetall(req.session.account._id, function (err, obj) {
         if (err) {
             return res.status(400).json({ error: "An error occured" });
@@ -191,7 +226,8 @@ var ReviewTrip = function (req, res) {
         if (!obj.requestedTrip) {
             return res.status(400).json({ error: "We can't find the trip you are trying to modify, please restart" });
         }
-
+        
+        // look up the checklist by its associated trip
         cl.ChecklistModel.findByTripID(obj.requestedTrip, function (err, doc) {
             if (err) {
                 console.log(err);
@@ -204,7 +240,8 @@ var ReviewTrip = function (req, res) {
             // we would actually get 1/1/2015. not right
             var d = new Date();
             var timezone = d.getTimezoneOffset() * 60000;
-
+            
+            // set up the date string as mm/dd/yyyy - mm/dd/yyyy
             var start = new Date(doc.trip.tripDate.start);
             start.setTime(start.getTime() + timezone);
             var end = new Date(doc.trip.tripDate.end);

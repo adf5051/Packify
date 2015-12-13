@@ -36,34 +36,8 @@ var router = function (app) {
     app.get('/accountDetailsModify', mid.RequiresLogin, controllers.AccountDetails.ModifyDetailsPage);
     app.post('/accountDetailsModify', mid.RequiresLogin, controllers.AccountDetails.UpdateDetails);
     
-    var outObj = {
-        address     : "test",
-        days        : 2,
-        heavyJacket : true,
-        lightJacket : true,
-        sandals     : true,
-        boots       : true,
-        shoes       : true,
-        umbrella    : true,
-        adults: {
-            num         : 2,
-            tshirts     : 2,
-            longsleeves : 2,
-            sweaters    : 2,
-            underwear   : 2,
-            pants       : 2,
-            shorts      : 2,
-            socks       : 2,
-        },
-        kids: {
-            num: 0
-        },
-        misc : 
-            [ { name: "shit", amt: "ton" },
-            { name: "shit", amt: "ton"}]
-    };
-
-    app.get('/testPage', function (req, res) { outObj.csrfToken = req.csrfToken(); res.render("ReviewChecklist", outObj); });
+    app.get('/trips', mid.RequiresLogin, controllers.Trips.ListTrips);
+    app.post('/trips', mid.RequiresLogin, controllers.Trips.SelectTrip);
 
     app.get('/', mid.RequiresLogout, controllers.Account.loginPage);
     app.get('*', mid.RequiresLogout, controllers.Account.loginPage);
